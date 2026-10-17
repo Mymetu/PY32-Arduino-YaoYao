@@ -263,3 +263,17 @@ tools.ArduinoPY32Flasher.erase.pattern.macosx=bash -c "echo 'ArduinoPY32Flasher:
 # debug.server.pyocd.script=
 # debug.server.pyocd.cmsisPack="D:\\GitHub\\luatos-soc-air001\\PACK\\Keil.AIR001_DFP.1.1.0.pack"
 # debug.server.pyocd.targetId="Air001Dev"
+
+# --- 菜单标题（YaoYao 增补）---
+menu.pnum=芯片型号
+menu.ClockSourceAndFrequency=时钟频率
+menu.upload_method=上传方式
+menu.UploadSpeed=上传速率
+menu.xserial=串口
+menu.SupplyVoltage=供电电压
+menu.LowSpeedClockSource=低速时钟
+menu.BOR=BOR 电压
+menu.BORWrite=写入 BOR
+menu.opt=编译优化
+menu.dbg=调试
+menu.BootConnection=启动引脚

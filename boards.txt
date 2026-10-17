@@ -647,6 +647,7 @@ GenF040.menu.UploadSpeed.1200=1200
 GenF040.menu.UploadSpeed.1200.upload.speed=1200
 
 # HSI/HSE閫夋嫨鍜屼富棰?GenF040.menu.ClockSourceAndFrequency.HSI4M_HCLK4M=HSI 4Mhz, HCLK 4Mhz
+GenF040.menu.ClockSourceAndFrequency.HSI4M_HCLK4M=HSI 4Mhz, HCLK 4Mhz
 GenF040.menu.ClockSourceAndFrequency.HSI4M_HCLK4M.build.temp=-D{build.series}_HSI_4M_HCLK_4M
 GenF040.menu.ClockSourceAndFrequency.HSI4M_HCLK4M.build.f_cpu=4000000L
 
