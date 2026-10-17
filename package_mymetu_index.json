@@ -4,28 +4,73 @@
                          "name":  "Mymetu",
                          "maintainer":  "YaoYao",
                          "websiteURL":  "https://github.com/Mymetu/PY32-Arduino-YaoYao",
-                         "email":  "yaoyao@local",
+                         "email":  "yaoyao@163.com",
                          "platforms":  [
                                            {
                                                "name":  "PY32 (YaoYao)",
                                                "architecture":  "py32",
                                                "version":  "0.2.7",
                                                "category":  "Contributed",
-                                               "url":  "https://cdn.jsdelivr.net/gh/Mymetu/PY32-Arduino-YaoYao@main/dist/py32-yaoyao-0.2.7.zip",
+                                               "help":  {
+                                                            "online":  "https://github.com/Mymetu/PY32-Arduino-YaoYao"
+                                                        },
+                                               "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
                                                "archiveFileName":  "py32-yaoyao-0.2.7.zip",
                                                "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
                                                "size":  "4340511",
                                                "systems":  [
                                                                {
                                                                    "host":  "x86_64-mingw32",
-                                                                   "url":  "https://cdn.jsdelivr.net/gh/Mymetu/PY32-Arduino-YaoYao@main/dist/py32-yaoyao-0.2.7.zip",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
                                                                    "archiveFileName":  "py32-yaoyao-0.2.7.zip",
                                                                    "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
                                                                    "size":  "4340511"
                                                                },
                                                                {
                                                                    "host":  "i686-mingw32",
-                                                                   "url":  "https://cdn.jsdelivr.net/gh/Mymetu/PY32-Arduino-YaoYao@main/dist/py32-yaoyao-0.2.7.zip",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
+                                                                   "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                                                   "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
+                                                                   "size":  "4340511"
+                                                               },
+                                                               {
+                                                                   "host":  "x86_64-pc-linux-gnu",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
+                                                                   "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                                                   "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
+                                                                   "size":  "4340511"
+                                                               },
+                                                               {
+                                                                   "host":  "i686-pc-linux-gnu",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
+                                                                   "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                                                   "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
+                                                                   "size":  "4340511"
+                                                               },
+                                                               {
+                                                                   "host":  "arm-linux-gnueabihf",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
+                                                                   "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                                                   "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
+                                                                   "size":  "4340511"
+                                                               },
+                                                               {
+                                                                   "host":  "aarch64-linux-gnu",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
+                                                                   "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                                                   "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
+                                                                   "size":  "4340511"
+                                                               },
+                                                               {
+                                                                   "host":  "x86_64-apple-darwin",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
+                                                                   "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                                                   "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
+                                                                   "size":  "4340511"
+                                                               },
+                                                               {
+                                                                   "host":  "arm64-apple-darwin",
+                                                                   "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
                                                                    "archiveFileName":  "py32-yaoyao-0.2.7.zip",
                                                                    "checksum":  "SHA-256:648F810BD318EEA2FED243FB1AFA965AC7FEEEF482D4A04C13D9F237CCD70EEF",
                                                                    "size":  "4340511"
