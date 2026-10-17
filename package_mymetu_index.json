@@ -24,26 +24,7 @@
                                                               }
                                                           ],
                                                "toolsDependencies":  [
-                                                                         {
-                                                                             "packager":  "PY32Duino",
-                                                                             "name":  "xpack-arm-none-eabi-gcc",
-                                                                             "version":  "13.2.1-1.1"
-                                                                         },
-                                                                         {
-                                                                             "packager":  "PY32Duino",
-                                                                             "name":  "CMSIS",
-                                                                             "version":  "5.7.0"
-                                                                         },
-                                                                         {
-                                                                             "packager":  "PY32Duino",
-                                                                             "name":  "AirISP",
-                                                                             "version":  "1.2.8.0"
-                                                                         },
-                                                                         {
-                                                                             "packager":  "PY32Duino",
-                                                                             "name":  "ArduinoPY32Flasher",
-                                                                             "version":  "uploader"
-                                                                         }
+
                                                                      ]
                                            }
                                        ],
