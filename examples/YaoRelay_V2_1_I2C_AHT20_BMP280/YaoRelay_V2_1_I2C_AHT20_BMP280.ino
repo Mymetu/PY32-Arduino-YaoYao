@@ -14,7 +14,7 @@
  *      Serial.print 持续大量打印会卡死主循环。
  *   2) Wire.begin(a,b) 在本内核会走错重载, 所以先 setSDA/setSCL 再 begin()。
  *   3) AHT20 每次读取都会触发一次新测量(内部延时 80ms), 周期 >=200ms 才稳。
- *   4) BMP280 校准数据分两块读(0x88/0x94), 一次读 24 字节在部分模块上会错位。
+ *   4) BMP280 校准区(0x88..0x9F)是小端, 测量区(0xF7..)是大端, 字节序搞反全错。
  * ==========================================================================*/
 
 #include <Wire.h>
@@ -221,13 +221,17 @@ static int32_t  bmpAdcT = 0, bmpAdcP = 0;
 static uint16_t digT1, digP1;
 static int16_t  digT2, digT3, digP2, digP3, digP4, digP5, digP6, digP7, digP8, digP9;
 
-static uint16_t u16be(const uint8_t *p)
+/* BMP280 一个芯片里两种字节序:
+ *   校准区 0x88..0x9F (dig_T*/dig_P*) : 低字节在前 = 小端
+ *   测量区 0xF7..0xFC (adc_P/adc_T)   : 高字节在前 = 大端
+ * 搞反了温度会差十几度、气压能差二十多倍。 */
+static uint16_t u16le(const uint8_t *p)
 {
-  return (uint16_t)(((uint16_t)p[0] << 8) | (uint16_t)p[1]);
+  return (uint16_t)(((uint16_t)p[1] << 8) | (uint16_t)p[0]);
 }
-static int16_t s16be(const uint8_t *p)
+static int16_t s16le(const uint8_t *p)
 {
-  return (int16_t)u16be(p);
+  return (int16_t)u16le(p);
 }
 
 static void bmpProbe(void)
@@ -258,23 +262,21 @@ static bool bmpInit(uint8_t addr)
   if (!i2cReadReg(addr, 0xD0U, &id, 1U)) { return false; }
   if ((id != 0x58U) && (id != 0x60U))    { return false; }
 
-  /* 校准数据 0x88..0x9F 共 24 字节。分两块读：一次突发 24 字节在部分模块/
-     长线上会返回错位数据，导致温度和气压全部算错。 */
-  if (!i2cReadReg(addr, 0x88U, &c[0],  12U)) { return false; }
-  if (!i2cReadReg(addr, 0x94U, &c[12], 12U)) { return false; }
+  /* 校准数据 0x88..0x9F 共 24 字节，BMP280 支持地址自增，一次读完即可。 */
+  if (!i2cReadReg(addr, 0x88U, c, 24U)) { return false; }
 
-  digT1 = u16be(&c[0]);
-  digT2 = s16be(&c[2]);
-  digT3 = s16be(&c[4]);
-  digP1 = u16be(&c[6]);
-  digP2 = s16be(&c[8]);
-  digP3 = s16be(&c[10]);
-  digP4 = s16be(&c[12]);
-  digP5 = s16be(&c[14]);
-  digP6 = s16be(&c[16]);
-  digP7 = s16be(&c[18]);
-  digP8 = s16be(&c[20]);
-  digP9 = s16be(&c[22]);
+  digT1 = u16le(&c[0]);
+  digT2 = s16le(&c[2]);
+  digT3 = s16le(&c[4]);
+  digP1 = u16le(&c[6]);
+  digP2 = s16le(&c[8]);
+  digP3 = s16le(&c[10]);
+  digP4 = s16le(&c[12]);
+  digP5 = s16le(&c[14]);
+  digP6 = s16le(&c[16]);
+  digP7 = s16le(&c[18]);
+  digP8 = s16le(&c[20]);
+  digP9 = s16le(&c[22]);
 
   /* 校准值明显不合理只告警，不中断（方便定位接线/读数据问题） */
   if ((digT1 < 10000U) || (digT1 > 45000U) ||
