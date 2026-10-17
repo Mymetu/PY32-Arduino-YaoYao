@@ -16,8 +16,8 @@
                                                         },
                                                "url":  "https://github.com/Mymetu/PY32-Arduino-YaoYao/raw/main/dist/py32-yaoyao-0.2.7.zip",
                                                "archiveFileName":  "py32-yaoyao-0.2.7.zip",
-                                               "checksum":  "SHA-256:B597AFDB093120EDBF5BEBD5B938FF932A6549431DE936FA77FB3CC4EB1A4212",
-                                               "size":  "4364772",
+                                               "checksum":  "SHA-256:C9725B025E0FBC89B594B03681FF9D9DD570005A8EDC9B198D6A0873C2E5B119",
+                                               "size":  "4370196",
                                                "boards":  [
                                                               {
                                                                   "name":  "Generic PY32F040 Series"

@@ -64,13 +64,29 @@
 | `analogWrite(pin, 0…255)` | ⚠️ 走 TIM 通道（可用引脚见 `PeripheralPins.c` 的 `PinMap_TIM`） |
 | `analogReadResolution()` / `analogWriteResolution()` | ⚠️ 随内核提供 |
 
-### 2.5 I2C（Wire）
+### 2.5 I2C（Wire）—— ✅ 已实测驱动
 | 对象 | 外设 | 引脚 | 状态 |
 |---|---|---|---|
-| `Wire` | I2C1 | SDA = PB7 / SCL = PB6 | ⚠️ 本次修正 AF1 |
-| 第二路 | I2C2 | SDA = PB11 / SCL = PB10 | ⚠️ 已映射 |
+| `Wire` | I2C1 | SDA = **PB7** / SCL = **PB6**（AF1） | ✅ AHT20 + BMP280 实测通过 |
+| I2C1 备选脚 | I2C1 | SDA = PB9 / SCL = PB8（AF1） | ✅ 已映射 |
+| 第二路 | I2C2 | SDA = PB11 / SCL = PB10 | ⚠️ 已映射（内核未实例化 `Wire2`） |
 
-`Wire.begin()`、`beginTransmission()/write()/endTransmission()`、`requestFrom()`、`read()`、`setClock()` 等标准接口。
+`Wire.begin()`、`beginTransmission()/write()/endTransmission()`、`requestFrom()`、`read()`、`setClock()` 等标准接口；PY32 分支走 HAL 阻塞收发（`HAL_I2C_Master_Transmit/Receive`，超时 1 s）。
+
+**用法注意（都是实测踩出来的）**
+1. **设脚要用 `setSDA()/setSCL()`，不要写 `Wire.begin(PB6, PB7)`** ——
+   本内核有 `begin(uint32_t, uint32_t)` 和 `begin(int address, bool generalCall, bool)` 两个重载，
+   传两个整型脚号会**静默命中后者**，被当成从站地址，表现为完全没有波形。
+   ```cpp
+   Wire.setSDA(PB7);
+   Wire.setSCL(PB6);
+   Wire.begin();               // 100 kHz 主机
+   ```
+2. 引脚按 AF 开漏 + **内部弱上拉**配置，实际必须靠模块板上的 4.7 k~10 kΩ 外部上拉；总线不要接 5 V 器件。
+3. **BMP280 的 24 字节校准块（0x88~0x9F）建议分两块读**（0x88 起 12 B + 0x94 起 12 B），
+   一次性突发 24 字节在部分模块/长线上会返回错位数据，导致温度、气压全部算错。
+4. 已适配/实测器件：**AHT20（0x38，温湿度，含 CRC8 校验）**、**BMP280（0x76/0x77，温度 + 气压）**；
+   完整可运行例程见 §4.4。
 
 ### 2.6 SPI
 | 对象 | 外设 | 引脚 | 状态 |
@@ -190,6 +206,59 @@ https://github.com/Mymetu/PY32-Arduino-YaoYao/raw/main/package_mymetu_index_gith
 
 此时点"上传"即可；上传失败就把这四步重做一遍再点（也可把 UploadSpeed 降到 57600）。
 
+### 4.4 例程二：I2C 传感器（AHT20 温湿度 + BMP280 温度/气压）
+
+`examples/YaoRelay_V2_1_I2C_AHT20_BMP280/`（装好板卡后：文件 → 示例 → PY32 (YaoYao) → YaoRelay_V2_1_I2C_AHT20_BMP280）
+
+**接线（I2C1，两个传感器并到同一条总线）**
+
+| MCU | 传感器模块 | 说明 |
+|---|---|---|
+| **PB6** | `SCL` | I2C1 SCL（AF1）；板上没引出时改 `SCL_PIN` 为 PB8 |
+| **PB7** | `SDA` | I2C1 SDA（AF1）；板上没引出时改 `SDA_PIN` 为 PB9 |
+| **3V3** | `VCC / VIN` | **必须 3.3 V**，不要接 5 V |
+| **GND** | `GND` | 共地 |
+
+查看输出走 **TTL 口**：`PA9(TX) → USB-TTL 的 RX`、`PA10(RX) → TX`、GND 共地，**115200 8N1**——
+和 AirISP 烧录用的是同一组线，烧完直接开串口助手即可。
+
+**模块侧**
+- AHT20：4 脚模块，地址固定 **0x38**，不用改。
+- BMP280：**CSB 接 VCC**（否则进 SPI 模式）；**SDO 接 GND → 0x76，接 VCC → 0x77**（程序两个地址都会自动试）。
+- 上拉用模块自带的即可（两个并联约 3.2 kΩ，100 kHz 足够），**不要重复加**。
+
+**程序要点**
+- 开机先扫总线（0x08~0x77），再分别初始化两个传感器；任一缺失只打印提示，不阻塞另一路。
+- AHT20：`0xAC 0x33 0x00` 触发 → 等 80 ms → 读 7 字节 → **CRC8 校验**；温度 `raw*20000/2^20-5000`，湿度 `raw*10000/2^20`。
+- BMP280：读校准块 → `0xF5=0x00`、`0xF4=0x27`（x1/x1/normal）→ 读 0xF7 起 6 字节 → 手册的 64 位整数补偿。
+- 输出**直写 `USART1->DR`**，不用 `Serial.print()`（规避 §6.1 的卡死问题）。
+- 每秒打印一次，并附带 BMP280 原始 ADC 值，方便区分「模块/接线问题」还是「算法问题」。
+
+**正常输出**
+```
+I2C scan (0x08-0x77): 0x38 0x76
+AHT20 : init OK   status=0x18
+  probe 0x76 -> chipID=0x58 (BMP280)
+  cal T1=28245 T2=26587 T3=50 P1=36931
+      P2=-10696 P3=3024 P4=6254 P5=-47 P6=-7 P7=9900 P8=-10230 P9=4285
+BMP280: init OK   addr=0x76   chipID=0x58
+------------------------------------------
+
+#1  t=1010ms
+  AHT20 : T= 29.39C   RH= 63.96%   (st=0x18)
+  BMP280: T= 29.42C   P=  1003.21 hPa (100321 Pa)
+          raw T=543210 P=415148
+```
+
+**排错**
+
+| 现象 | 处理 |
+|---|---|
+| `I2C scan ... <no device>` | 查上拉电阻、SDA/SCL 是否接反、模块供电；PB6/PB7 没引出就换 PB8/PB9 |
+| AHT20 恒为负几十度 | 旧代码温度换算少乘一个 10，用本仓库版本 |
+| BMP280 校准值离谱 / 气压上万 hPa | 校准块没读对，检查接线与上拉；程序会打印 `[!] 校准数据可疑` |
+| 气压恒为 0 | `dig_P1 == 0`，校准数据无效（换线/换模块） |
+
 ---
 
 ## 5. 配套工具与文档
@@ -197,6 +266,7 @@ https://github.com/Mymetu/PY32-Arduino-YaoYao/raw/main/package_mymetu_index_gith
 | 资源 | 位置 | 说明 |
 |---|---|---|
 | **设备协议手册** | `设备手册_ModbusRTU.md`（仓库根目录 / 项目资料目录） | 接口定义、寄存器表、命令速查、参数保存、故障排查 |
+| **I2C 传感器例程** | `examples/YaoRelay_V2_1_I2C_AHT20_BMP280/` | AHT20 + BMP280 总线扫描 / 初始化 / 每秒读数，见 §4.4 |
 | **PC 上位机** | 项目资料 `485_232_ttl_Relay_Demo\windows_software\` | `YaoRelay上位机.exe`（双击即用，.NET Framework 4）：串口选择、设备ID、闭合/释放/点动、读继电器/读DI、改波特率/校验位/地址；**收发记录可选中复制** |
 | **数据手册 / SDK** | 项目资料 `github_arduino_support\PY32F040C1BT6_documents\` | 芯片数据手册、参考手册、厂商 SDK（仅本地参考，不入 Git） |
 | **国内加速资源** | 项目资料 `github_arduino_support\cn_speed up\` | 索引 + 板卡包 + 4 个工具包（365 MB），可直接部署到任意服务器 |
@@ -218,5 +288,5 @@ https://github.com/Mymetu/PY32-Arduino-YaoYao/raw/main/package_mymetu_index_gith
 
 - 上游：[regimantas/Arduino-PY32](https://github.com/regimantas/Arduino-PY32)（PY32Duino 0.2.62，BSD-3-Clause）
 - 工具链：xpack-dev-tools arm-none-eabi-gcc 13.2.1-1.1、stm32duino CMSIS 5.7.0、Air-duino AirISP、PY32Flasher
-- 本仓库修改：多串口 / I2C / SPI 适配修正、IWatchdog 加固、菜单修复、flash 参数保存支持、Modbus RTU 继电器示例
+- 本仓库修改：多串口 / I2C / SPI 适配修正、IWatchdog 加固、菜单修复、flash 参数保存支持、Modbus RTU 继电器示例、I2C 传感器（AHT20 + BMP280）示例
 - 许可：**BSD-3-Clause**，详见 `LICENSE`
