@@ -222,9 +222,9 @@ static uint16_t digT1, digP1;
 static int16_t  digT2, digT3, digP2, digP3, digP4, digP5, digP6, digP7, digP8, digP9;
 
 /* BMP280 一个芯片里两种字节序:
- *   校准区 0x88..0x9F (dig_T*/dig_P*) : 低字节在前 = 小端
- *   测量区 0xF7..0xFC (adc_P/adc_T)   : 高字节在前 = 大端
- * 搞反了温度会差十几度、气压能差二十多倍。 */
+ *   校准区 0x88..0x9F (dig_T1..dig_T3, dig_P1..dig_P9) : 低字节在前 = 小端
+ *   测量区 0xF7..0xFC (adc_P / adc_T)                  : 高字节在前 = 大端
+ * 搞反了温度会差十几度, 气压能差二十多倍。 */
 static uint16_t u16le(const uint8_t *p)
 {
   return (uint16_t)(((uint16_t)p[1] << 8) | (uint16_t)p[0]);

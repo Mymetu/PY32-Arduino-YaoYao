@@ -16,8 +16,8 @@
                                                         },
                                                "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
                                                "archiveFileName":  "py32-yaoyao-0.2.7.zip",
-                                               "checksum":  "SHA-256:6269F078D47797A02082527AC60FEAB450A594D24F34F70B40C54C236A93C796",
-                                               "size":  "4370293",
+                                               "checksum":  "SHA-256:EB5F4289FD88E9FEF32F96CDF4F6A323B8ED61598EFAD0E2B07663B5F76B7B44",
+                                               "size":  "4370302",
                                                "boards":  [
                                                               {
                                                                   "name":  "Generic PY32F040 Series"
