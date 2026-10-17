@@ -1,0 +1,36 @@
+{
+    "packages":  [
+                     {
+                         "name":  "Mymetu",
+                         "maintainer":  "YaoYao",
+                         "websiteURL":  "https://github.com/Mymetu/PY32-Arduino-YaoYao",
+                         "email":  "yaoyao@163.com",
+                         "platforms":  [
+                                           {
+                                               "name":  "PY32 (YaoYao)",
+                                               "architecture":  "py32",
+                                               "version":  "0.2.7",
+                                               "category":  "Contributed",
+                                               "help":  {
+                                                            "online":  "https://github.com/Mymetu/PY32-Arduino-YaoYao"
+                                                        },
+                                               "url":  "https://root.yaoyao.ink/Yao-Relay_V2_1/py32-yaoyao-0.2.7.zip",
+                                               "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                               "checksum":  "SHA-256:B597AFDB093120EDBF5BEBD5B938FF932A6549431DE936FA77FB3CC4EB1A4212",
+                                               "size":  "4364772",
+                                               "boards":  [
+                                                              {
+                                                                  "name":  "Generic PY32F040 Series"
+                                                              }
+                                                          ],
+                                               "toolsDependencies":  {
+
+                                                                     }
+                                           }
+                                       ],
+                         "tools":  [
+
+                                   ]
+                     }
+                 ]
+}
