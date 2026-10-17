@@ -1,0 +1,131 @@
+{
+    "packages":  [
+                     {
+                         "name":  "Mymetu",
+                         "maintainer":  "YaoYao",
+                         "websiteURL":  "https://github.com/Mymetu/PY32-Arduino-YaoYao",
+                         "email":  "yaoyao@local",
+                         "platforms":  [
+                                           {
+                                               "name":  "PY32 (YaoYao)",
+                                               "architecture":  "PY32",
+                                               "version":  "0.2.7",
+                                               "category":  "Contributed",
+                                               "url":  "https://raw.githubusercontent.com/Mymetu/PY32-Arduino-YaoYao/main/dist/py32-yaoyao-0.2.7.zip",
+                                               "archiveFileName":  "py32-yaoyao-0.2.7.zip",
+                                               "checksum":  "SHA-256:648f810bd318eea2fed243fb1afa965ac7feeef482d4a04c13d9f237ccd70eef",
+                                               "size":  "4340511",
+                                               "boards":  [
+                                                              {
+                                                                  "name":  "Generic PY32F040 Series"
+                                                              }
+                                                          ],
+                                               "toolsDependencies":  [
+                                                                         {
+                                                                             "packager":  "Mymetu",
+                                                                             "name":  "ArduinoPY32Flasher",
+                                                                             "version":  "uploader"
+                                                                         },
+                                                                         {
+                                                                             "packager":  "Mymetu",
+                                                                             "name":  "xpack-arm-none-eabi-gcc",
+                                                                             "version":  "13.2.1-1.1"
+                                                                         },
+                                                                         {
+                                                                             "packager":  "Mymetu",
+                                                                             "name":  "CMSIS",
+                                                                             "version":  "5.7.0"
+                                                                         },
+                                                                         {
+                                                                             "packager":  "Mymetu",
+                                                                             "name":  "AirISP",
+                                                                             "version":  "1.2.8.0"
+                                                                         }
+                                                                     ]
+                                           }
+                                       ],
+                         "tools":  [
+                                       {
+                                           "name":  "ArduinoPY32Flasher",
+                                           "version":  "uploader",
+                                           "systems":  [
+                                                           {
+                                                               "host":  "x86_64-mingw32",
+                                                               "url":  "https://github.com/regimantas/Arduino-PY32/releases/download/uploader/ArduinoPY32Flasher-windows.zip",
+                                                               "archiveFileName":  "ArduinoPY32Flasher-windows.zip",
+                                                               "checksum":  "SHA-256:acc1d518c19793d672ddf573c1dfef9eefcd43a15c1102696cae1a16ec8f41ab",
+                                                               "size":  "40579399"
+                                                           },
+                                                           {
+                                                               "host":  "i686-mingw32",
+                                                               "url":  "https://github.com/regimantas/Arduino-PY32/releases/download/uploader/ArduinoPY32Flasher-windows.zip",
+                                                               "archiveFileName":  "ArduinoPY32Flasher-windows.zip",
+                                                               "checksum":  "SHA-256:acc1d518c19793d672ddf573c1dfef9eefcd43a15c1102696cae1a16ec8f41ab",
+                                                               "size":  "40579399"
+                                                           }
+                                                       ]
+                                       },
+                                       {
+                                           "name":  "xpack-arm-none-eabi-gcc",
+                                           "version":  "13.2.1-1.1",
+                                           "systems":  [
+                                                           {
+                                                               "host":  "x86_64-mingw32",
+                                                               "url":  "https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v13.2.1-1.1/xpack-arm-none-eabi-gcc-13.2.1-1.1-win32-x64.zip",
+                                                               "archiveFileName":  "xpack-arm-none-eabi-gcc-13.2.1-1.1-win32-x64.zip",
+                                                               "checksum":  "SHA-256:56b18ccb0a50f536332ec5de57799342ff0cd005ca2c54288c74759b51929e4f",
+                                                               "size":  "306340878"
+                                                           },
+                                                           {
+                                                               "host":  "i686-mingw32",
+                                                               "url":  "https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v13.2.1-1.1/xpack-arm-none-eabi-gcc-13.2.1-1.1-win32-x64.zip",
+                                                               "archiveFileName":  "xpack-arm-none-eabi-gcc-13.2.1-1.1-win32-x64.zip",
+                                                               "checksum":  "SHA-256:56b18ccb0a50f536332ec5de57799342ff0cd005ca2c54288c74759b51929e4f",
+                                                               "size":  "306340878"
+                                                           }
+                                                       ]
+                                       },
+                                       {
+                                           "name":  "CMSIS",
+                                           "version":  "5.7.0",
+                                           "systems":  [
+                                                           {
+                                                               "host":  "x86_64-mingw32",
+                                                               "url":  "https://github.com/stm32duino/ArduinoModule-CMSIS/releases/download/5.7.0/CMSIS-5.7.0.tar.bz2",
+                                                               "archiveFileName":  "CMSIS-5.7.0.tar.bz2",
+                                                               "checksum":  "SHA-256:0b04b0f214e483bcc360cda985cddc0de8031714019ceabcda4770d510b82bfe",
+                                                               "size":  "26151901"
+                                                           },
+                                                           {
+                                                               "host":  "i686-mingw32",
+                                                               "url":  "https://github.com/stm32duino/ArduinoModule-CMSIS/releases/download/5.7.0/CMSIS-5.7.0.tar.bz2",
+                                                               "archiveFileName":  "CMSIS-5.7.0.tar.bz2",
+                                                               "checksum":  "SHA-256:0b04b0f214e483bcc360cda985cddc0de8031714019ceabcda4770d510b82bfe",
+                                                               "size":  "26151901"
+                                                           }
+                                                       ]
+                                       },
+                                       {
+                                           "name":  "AirISP",
+                                           "version":  "1.2.8.0",
+                                           "systems":  [
+                                                           {
+                                                               "host":  "x86_64-mingw32",
+                                                               "url":  "https://github.com/Air-duino/AirISP/releases/download/1.2.8.0/AirISP-win-x64.zip",
+                                                               "archiveFileName":  "AirISP-win-x64.zip",
+                                                               "checksum":  "SHA-256:acfe73f0eea634767259493437484508d2e1f7807c7a1a2a874a9ba4545bd92c",
+                                                               "size":  "5624985"
+                                                           },
+                                                           {
+                                                               "host":  "i686-mingw32",
+                                                               "url":  "https://github.com/Air-duino/AirISP/releases/download/1.2.8.0/AirISP-win-x64.zip",
+                                                               "archiveFileName":  "AirISP-win-x64.zip",
+                                                               "checksum":  "SHA-256:acfe73f0eea634767259493437484508d2e1f7807c7a1a2a874a9ba4545bd92c",
+                                                               "size":  "5624985"
+                                                           }
+                                                       ]
+                                       }
+                                   ]
+                     }
+                 ]
+}
