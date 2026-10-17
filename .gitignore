@@ -50,3 +50,7 @@ Thumbs.db
 *.bak
 *.bak_*
 *.bak.*
+
+# 本地参考资料 / 国内加速包（不入 Git）
+PY32F040C1BT6_documents/
+cn_speed up/
